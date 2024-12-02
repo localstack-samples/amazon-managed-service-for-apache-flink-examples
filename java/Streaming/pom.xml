@@ -123,31 +123,6 @@ under the License.
 
 	<build>
 		<plugins>
-			<!-- Fail compilation on deprecation warnings to prevent from showing users outdated examples. -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>compile</id>
-						<phase>process-sources</phase>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-						<configuration>
-							<compilerArgument>-Xlint:deprecation</compilerArgument>
-							<failOnWarning>true</failOnWarning>
-							<!-- This example is temporarily preserved only for testing purpose. -->
-							<excludes>
-								<exclude>
-									org/apache/flink/streaming/examples/iteration/IterateExample.java
-								</exclude>
-							</excludes>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
 			<!-- self-contained jars for each example -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

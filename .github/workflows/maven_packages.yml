@@ -40,7 +40,7 @@ jobs:
 
     - name: Build with Maven
       working-directory: ${{ matrix.path }}
-      run: mvn package -Denforcer.skip=true
+      run: mvn package
 
     - name: Publish to GitHub Packages Apache Maven
       run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
