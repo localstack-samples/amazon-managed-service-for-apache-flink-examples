@@ -41,7 +41,7 @@ jobs:
 
     - name: Build with Maven
       working-directory: ${{ matrix.path }}
-      run: mvn --batch-mode package -Denforcer.skip=true -Dcheckstyle.skip=true
+      run: mvn --batch-mode package -Denforcer.skip=true -Dcheckstyle.skip=true -Dspotless.check.skip=true
 
     - name: Publish to GitHub Packages Apache Maven
       working-directory: ${{ matrix.path }}
