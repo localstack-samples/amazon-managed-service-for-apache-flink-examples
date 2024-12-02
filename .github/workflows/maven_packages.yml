@@ -36,15 +36,16 @@ jobs:
       with:
         java-version: '21'
         distribution: 'temurin'
+        server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
         settings-path: ${{ github.workspace }}
 
     - name: Build with Maven
       working-directory: ${{ matrix.path }}
-      run: mvn package
+      run: mvn --batch-mode package
 
     - name: Publish to GitHub Packages Apache Maven
       working-directory: ${{ matrix.path }}
-      run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
+      run: mvn --batch-mode deploy -s $GITHUB_WORKSPACE/settings.xml
       env:
         GITHUB_TOKEN: ${{ github.token }}
 
