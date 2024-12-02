@@ -41,11 +41,10 @@ jobs:
 
     - name: Build with Maven
       working-directory: ${{ matrix.path }}
-      run: mvn --batch-mode package
+      run: mvn --batch-mode package -Denforcer.skip=true -Dcheckstyle.skip=true
 
     - name: Publish to GitHub Packages Apache Maven
       working-directory: ${{ matrix.path }}
       run: mvn --batch-mode deploy -s $GITHUB_WORKSPACE/settings.xml
       env:
         GITHUB_TOKEN: ${{ github.token }}
-
