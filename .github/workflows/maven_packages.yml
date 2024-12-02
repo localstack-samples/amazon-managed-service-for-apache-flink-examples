@@ -36,6 +36,7 @@ jobs:
       with:
         java-version: '21'
         distribution: 'temurin'
+        settings-path: ${{ github.workspace }}
 
     - name: Build with Maven
       working-directory: ${{ matrix.path }}
