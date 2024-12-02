@@ -33,6 +33,12 @@ under the License.
 
 	<packaging>jar</packaging>
 
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+        </repository>
+    </distributionManagement>
+
 	<!-- Allow users to pass custom jcuda versions -->
 	<properties>
 		<jcuda.version>10.0.0</jcuda.version>

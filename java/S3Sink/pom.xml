@@ -8,6 +8,12 @@
     <artifactId>flink-kds-s3</artifactId>
     <version>1.0</version>
 
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+        </repository>
+    </distributionManagement>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <buildDirectory>${project.basedir}/target</buildDirectory>
