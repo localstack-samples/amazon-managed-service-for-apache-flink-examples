@@ -11,6 +11,8 @@
     <distributionManagement>
         <repository>
             <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/localstack-samples/amazon-managed-service-for-apache-flink-examples</url>
         </repository>
     </distributionManagement>
 
