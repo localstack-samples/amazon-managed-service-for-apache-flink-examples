@@ -5,14 +5,14 @@ on:
     paths:
       - java/**
       - .github/workflows/maven_packages.yml
-#    branches:
-#      - master
+    branches:
+      - master
 
   pull_request:
     paths:
       - java/**
-#    branches:
-#      - master
+    branches:
+      - master
 
   workflow_dispatch:
 
