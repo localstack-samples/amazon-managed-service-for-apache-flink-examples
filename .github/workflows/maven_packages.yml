@@ -21,7 +21,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - path: "java/Streaming"
+          - path: "java/Printer"
           - path: "java/S3Sink"
     runs-on: ubuntu-latest
     permissions:
@@ -41,7 +41,7 @@ jobs:
 
     - name: Build with Maven
       working-directory: ${{ matrix.path }}
-      run: mvn --batch-mode package -Denforcer.skip=true -Dcheckstyle.skip=true -Dspotless.check.skip=true
+      run: mvn --batch-mode package
 
     - name: Publish to GitHub Packages Apache Maven
       working-directory: ${{ matrix.path }}
