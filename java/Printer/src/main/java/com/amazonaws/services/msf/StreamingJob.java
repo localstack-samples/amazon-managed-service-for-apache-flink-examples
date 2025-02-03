@@ -9,8 +9,8 @@ import org.apache.flink.connector.datagen.source.DataGeneratorSource;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.LocalStreamEnvironment;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Map;
@@ -18,7 +18,7 @@ import java.util.Properties;
 
 public class StreamingJob {
 
-    private static final Logger LOGGER = LogManager.getLogger(StreamingJob.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(StreamingJob.class);
 
     // Create ObjectMapper instance to serialise POJOs into JSONs
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
@@ -54,6 +54,8 @@ public class StreamingJob {
         // DataStream from Source
         DataStream<StockPrice> kinesis = env.fromSource(
                 source, WatermarkStrategy.noWatermarks(), "data-generator").setParallelism(1);
+
+        LOGGER.info("Executing printer job...");
 
         // Print
         kinesis.print();
