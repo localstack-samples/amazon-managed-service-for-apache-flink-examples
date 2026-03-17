@@ -10,6 +10,8 @@ This repository contains sample applications for [Amazon Managed Service for Apa
 - [Java](https://adoptium.net/) and [Maven](https://maven.apache.org/) for Java-based examples.
 - [Python](https://www.python.org/downloads/) and `pip` for Python-based examples.
 
+Run the following command before starting LocalStack with your preferred method:
+
 ```bash
 export LOCALSTACK_AUTH_TOKEN=<your-auth-token>
 ```
