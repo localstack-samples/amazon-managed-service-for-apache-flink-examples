@@ -1,13 +1,6 @@
 # Amazon Managed Service for Apache Flink Examples
 
-This repository contains sample applications for Amazon Managed Service for Apache Flink, organized by language and operational use cases.
-
-## LocalStack Managed Flink Notes
-
-These samples are intended to run with LocalStack's Managed Service for Apache Flink emulation. Review service docs and current limitations before running:
-
-- https://docs.localstack.cloud/aws/services/kinesisanalyticsv2/
-- https://docs.localstack.cloud/aws/services/kinesisanalyticsv2/#limitations
+This repository contains sample applications for [Amazon Managed Service for Apache Flink](https://docs.localstack.cloud/aws/services/kinesisanalyticsv2/), organized by language and operational use cases.
 
 ## Prerequisites
 
