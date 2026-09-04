@@ -4,9 +4,9 @@ This repository contains sample applications for [Amazon Managed Service for Apa
 
 ## Prerequisites
 
-- A valid [LocalStack for AWS license](https://localstack.cloud/pricing), which provides a [`LOCALSTACK_AUTH_TOKEN`](https://docs.localstack.cloud/getting-started/auth-token/) required to run these samples with Managed Flink in LocalStack.
+- A valid [LocalStack for AWS license](https://localstack.cloud/pricing), which provides a [`LOCALSTACK_AUTH_TOKEN`](https://docs.localstack.cloud/aws/getting-started/auth-token/) required to run these samples with Managed Flink in LocalStack.
 - [Docker](https://docs.docker.com/get-docker/) for running LocalStack.
-- [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) and [LocalStack CLI](https://docs.localstack.cloud/user-guide/tools/localstack-cli/) (`awslocal`).
+- [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) (required by `lstk aws`) and [`lstk`](https://docs.localstack.cloud/aws/developer-tools/running-localstack/lstk/), the LocalStack CLI.
 - [Java](https://adoptium.net/) and [Maven](https://maven.apache.org/) for Java-based examples.
 - [Python](https://www.python.org/downloads/) and `pip` for Python-based examples.
 
