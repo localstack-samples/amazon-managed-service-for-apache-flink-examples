@@ -38,6 +38,11 @@ mvn -B package -DskipTests -f java/S3Sink/pom.xml
 ./test.sh S3Sink
 ```
 
+Applications that use the Kinesis connectors need two extra runtime properties on LocalStack, which `test.sh` sets for GettingStarted:
+
+- `aws.endpoint` set to `https://localhost.localstack.cloud:4566` on each stream's property group. By default the connectors call `kinesis.<region>.amazonaws.com`, and LocalStack's TLS certificate does not cover that name.
+- `aws.http.protocol.version` set to `HTTP1_1` on the sink's property group. The sink's AWS SDK v2 client uses HTTP/2 by default, which fails against LocalStack.
+
 ## Security
 
 See [CONTRIBUTING](CONTRIBUTING.md#security-issue-notifications) for more information.
