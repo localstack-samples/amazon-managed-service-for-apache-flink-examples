@@ -13,6 +13,8 @@ REGION=${AWS_DEFAULT_REGION:-us-east-1}
 CODE_BUCKET=$APP-code
 ROLE=$APP-role
 MAX_WAIT_SECONDS=${MAX_WAIT_SECONDS:-600}
+# AWS endpoint as seen from the Flink containers LocalStack starts
+FLINK_AWS_ENDPOINT=${FLINK_AWS_ENDPOINT:-https://localhost.localstack.cloud:4566}
 
 JAR=$(ls java/"$EXAMPLE"/target/*.jar 2>/dev/null | grep -v '/original-' | head -1 || true)
 if [ -z "$JAR" ]; then
@@ -57,10 +59,12 @@ case "$EXAMPLE" in
       lstk aws kinesis create-stream --stream-name "$stream" --shard-count 1
       lstk aws kinesis wait stream-exists --stream-name "$stream"
     done
-    # TRIM_HORIZON, so records put before the job is fully up are still read
+    # The Kinesis connectors call kinesis.<region>.amazonaws.com over HTTPS by default.
+    # LocalStack's certificate does not cover that name, so point them at LocalStack.
+    # TRIM_HORIZON, so records put before the job is fully up are still read.
     PROPERTIES="[
-      {\"PropertyGroupId\": \"InputStream0\", \"PropertyMap\": {\"stream.name\": \"$INPUT\", \"aws.region\": \"$REGION\", \"flink.stream.initpos\": \"TRIM_HORIZON\"}},
-      {\"PropertyGroupId\": \"OutputStream0\", \"PropertyMap\": {\"stream.name\": \"$OUTPUT\", \"aws.region\": \"$REGION\"}}
+      {\"PropertyGroupId\": \"InputStream0\", \"PropertyMap\": {\"stream.name\": \"$INPUT\", \"aws.region\": \"$REGION\", \"aws.endpoint\": \"$FLINK_AWS_ENDPOINT\", \"flink.stream.initpos\": \"TRIM_HORIZON\"}},
+      {\"PropertyGroupId\": \"OutputStream0\", \"PropertyMap\": {\"stream.name\": \"$OUTPUT\", \"aws.region\": \"$REGION\", \"aws.endpoint\": \"$FLINK_AWS_ENDPOINT\"}}
     ]"
     ;;
   *)
