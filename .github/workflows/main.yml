@@ -1,0 +1,72 @@
+name: Run on LocalStack
+
+on:
+  push:
+    paths-ignore:
+      - '**.md'
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  flink:
+    name: ${{ matrix.example }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        example:
+          - S3Sink
+          - GettingStarted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '11'
+          cache: maven
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install lstk
+        run: |
+          npm install -g @localstack/lstk
+          lstk setup aws --force --non-interactive
+
+      - name: Build the application
+        run: mvn -B package -DskipTests -f java/${{ matrix.example }}/pom.xml
+
+      - name: Start LocalStack
+        env:
+          LOCALSTACK_AUTH_TOKEN: ${{ secrets.LOCALSTACK_AUTH_TOKEN }}
+        run: lstk start
+
+      - name: Deploy and test the application
+        run: ./test.sh ${{ matrix.example }}
+
+      - name: Show LocalStack and Flink logs
+        if: failure()
+        run: |
+          lstk aws kinesisanalyticsv2 list-applications || true
+          docker ps -a
+          # The JobManager and TaskManager containers LocalStack started for the application
+          for c in $(docker ps -aq); do
+            name=$(docker inspect -f '{{.Name}}' "$c")
+            [ "$name" = "/localstack-aws" ] && continue
+            echo "=== $name"
+            docker logs --tail 150 "$c" 2>&1 || true
+          done
+          lstk logs | tail -300
