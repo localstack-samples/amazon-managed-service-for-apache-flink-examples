@@ -61,12 +61,10 @@ case "$EXAMPLE" in
     done
     # The Kinesis connectors call kinesis.<region>.amazonaws.com over HTTPS by default.
     # LocalStack's certificate does not cover that name, so point them at LocalStack.
-    # The sink's AWS SDK v2 client talks HTTP/2 by default, which fails against
-    # LocalStack ("First received frame was not SETTINGS"), so it uses HTTP/1.1.
     # TRIM_HORIZON, so records put before the job is fully up are still read.
     PROPERTIES="[
       {\"PropertyGroupId\": \"InputStream0\", \"PropertyMap\": {\"stream.name\": \"$INPUT\", \"aws.region\": \"$REGION\", \"aws.endpoint\": \"$FLINK_AWS_ENDPOINT\", \"flink.stream.initpos\": \"TRIM_HORIZON\"}},
-      {\"PropertyGroupId\": \"OutputStream0\", \"PropertyMap\": {\"stream.name\": \"$OUTPUT\", \"aws.region\": \"$REGION\", \"aws.endpoint\": \"$FLINK_AWS_ENDPOINT\", \"aws.http.protocol.version\": \"HTTP1_1\"}}
+      {\"PropertyGroupId\": \"OutputStream0\", \"PropertyMap\": {\"stream.name\": \"$OUTPUT\", \"aws.region\": \"$REGION\", \"aws.endpoint\": \"$FLINK_AWS_ENDPOINT\"}}
     ]"
     ;;
   *)
